@@ -13,3 +13,7 @@ export async function GET(request: Request) {
     // Redirect to dashboard if succesful auth 
     return NextResponse.redirect(`${origin}/dashboard`);
 }
+
+//This and all the other files in the /callback folder are used
+// to redirect the user into the app after clicking the auth link in their email.
+// (In Supabase) 
