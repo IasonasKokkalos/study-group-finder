@@ -13,8 +13,8 @@ export interface Session {
     title: string;
     description: string;
     location: string;
-    session_data: string;
-    created_id: string;
+    session_date: string;
+    creator_id: string;
     // These are populated by joins, therefore not always present
     creator?: Profile;
      participants?: Participant[];
