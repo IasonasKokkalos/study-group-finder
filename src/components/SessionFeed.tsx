@@ -41,6 +41,30 @@ export default function SessionFeed({ currentUserId }: SessionFeedProps) {
 
     useEffect(() => {
         fetchSessions();
+
+        // Sub to real-time changes on the session table
+        const sessionsChannel = supabase
+          .channel("sessions-changes")
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "sessions" },
+            () => {
+              fetchSessions(); // Refresh whenever a session is created/updated/deleted
+            }
+          )
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "sessions_participants" },
+            () => {
+              fetchSessions(); // Refresh whenever someone joins/leaves
+            }
+          )
+          .subscribe();
+
+          // Cleanup: unsub when the component unmounts
+          return () => {
+            supabase.removeChannel(sessionsChannel);
+          };
     }, []);
 
     async function handleJoin(sessionIdL: string) {
