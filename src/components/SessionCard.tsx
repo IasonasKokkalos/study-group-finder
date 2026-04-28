@@ -7,6 +7,7 @@ interface SessionCardProps {
     currentUserId: string;
     onJoin: (sessionId: string) => void;
     onLeave: (sessionId: string) => void;
+    onDelete: (sessionId: string) => void;
 }
 
 export default function SessionCard({
@@ -14,6 +15,7 @@ export default function SessionCard({
     currentUserId,
     onJoin,
     onLeave,
+    onDelete,
 }: SessionCardProps) {
     const isCreator = session.creator_id == currentUserId;
     const hasJoined = session.participants?.some(
@@ -94,9 +96,18 @@ export default function SessionCard({
           )}
 
           {isCreator && (
-            <span className="text-xs text-green-600 font-medium">
-              Your session
-            </span>
+            <div className="flex flex-col gap-2">
+              <span className="text-xs text-green-600 font-medium">
+                Your session
+              </span>
+              <button
+                onClick={() => onDelete(session.id)}
+                className="px-4 py-2 bg-red-100 text-red-600 text-sm rounded-lg
+                 hover:bg-red-200 transition-colors font-medium"
+              >
+                Delete
+              </button>
+            </div>
           )}
         </div>
       </div>

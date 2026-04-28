@@ -94,6 +94,17 @@ export default function SessionFeed({ currentUserId }: SessionFeedProps) {
         
         fetchSessions();
     }
+
+    async function handleDelete(sessionId: string) {
+    const { error } = await supabase
+      .from("sessions")
+      .delete()
+      .eq("id", sessionId);
+
+    if (error) {
+      console.error("Error deleting session:", error);
+    }
+}
      
   if (loading) {
     return <p className="text-center text-gray-500 py-8">Loading sessions...</p>;
@@ -117,6 +128,7 @@ export default function SessionFeed({ currentUserId }: SessionFeedProps) {
           currentUserId={currentUserId}
           onJoin={handleJoin}
           onLeave={handleLeave}
+          onDelete={handleDelete}
         />
       ))}
     </div>
