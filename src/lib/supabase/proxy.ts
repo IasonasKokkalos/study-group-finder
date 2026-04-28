@@ -34,7 +34,6 @@ export async function updateSession(request: NextRequest) {
 
     // IMPORTANT: DONT remove this line 
     // Calling getUser() refreshes tht auth tokens if expired.
-
     const {
         data: { user},
     } = await supabase.auth.getUser();

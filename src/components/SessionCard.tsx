@@ -22,7 +22,6 @@ export default function SessionCard({
 
     const participantCount = session.participants?.length || 0;
 
-    // Date Format
     const dateStr = new Date(session.session_date).toLocaleTimeString("en-GB", {
         weekday: "short",
         day: "numeric",
