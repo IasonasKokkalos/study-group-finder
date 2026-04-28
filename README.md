@@ -1,36 +1,151 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📚 Study Group Finder — TU/e
+
+A full-stack web app where TU/e students can create, browse, and join study sessions. Post a session, share the course and location, and other students can join in real time — no page refresh needed.
+
+Built as Project 2 of my personal [portfolio roadmap](https://github.com/YOUR-USERNAME).
+
+![Next.js](https://img.shields.io/badge/Next.js_15-000?logo=nextdotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?logo=supabase&logoColor=white)
+![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000?logo=vercel&logoColor=white)
+
+---
+
+## What It Does
+
+- **Sign up / log in** with email and password
+- **Browse** upcoming study sessions in a live feed
+- **Create** a session — set the course, date, time, location, and description
+- **Join or leave** any session with one click
+- **Real-time updates** — when someone joins or creates a session, everyone sees it instantly
+- **Delete your own sessions** when plans change
+- **1-month session limit** — sessions can only be scheduled up to 30 days out to keep the feed relevant
+- **Route protection** — unauthenticated users are redirected to login
+
+## Tech Stack
+
+| Layer         | Technology                          |
+|---------------|-------------------------------------|
+| Framework     | Next.js 15 (App Router)             |
+| Language      | TypeScript                          |
+| Styling       | Tailwind CSS                        |
+| Database      | Supabase (PostgreSQL)               |
+| Auth          | Supabase Auth (email/password)      |
+| Real-time     | Supabase Realtime (WebSockets)      |
+| Deployment    | Vercel                              |
+
+## Project Structure
+
+```
+study-group-finder/
+├── src/
+│   ├── app/
+│   │   ├── auth/
+│   │   │   ├── login/page.tsx
+│   │   │   ├── signup/page.tsx
+│   │   │   └── callback/route.ts
+│   │   ├── dashboard/page.tsx
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── globals.css
+│   ├── components/
+│   │   ├── Navbar.tsx
+│   │   ├── Dashboard.tsx
+│   │   ├── SessionCard.tsx
+│   │   ├── SessionFeed.tsx
+│   │   ├── CreateSessionForm.tsx
+│   │   └── AuthForm.tsx
+│   ├── lib/
+│   │   └── supabase/
+│   │       ├── client.ts
+│   │       ├── server.ts
+│   │       └── middleware.ts
+│   └── types/
+│       └── index.ts
+├── middleware.ts
+├── .env.local
+└── package.json
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- A [Supabase](https://supabase.com) account (free tier works)
+
+### 1. Clone the repo
+
+```bash
+git clone git@github.com:YOUR-USERNAME/study-group-finder.git
+cd study-group-finder
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Set up Supabase
+
+Create a new project on [supabase.com](https://supabase.com). Go to **Settings → API** and copy your Project URL and anon public key.
+
+Create a `.env.local` file in the project root:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+```
+
+### 4. Create the database tables
+
+Go to the **SQL Editor** in your Supabase dashboard and run the SQL from the project's database setup script. This creates the `profiles`, `sessions`, and `session_participants` tables with Row Level Security policies and a trigger that auto-creates profiles on signup.
+
+### 5. Configure auth redirects
+
+In your Supabase dashboard → **Authentication → URL Configuration**:
+- Set **Site URL** to `http://localhost:3000`
+- Add `http://localhost:3000/auth/callback` to **Redirect URLs**
+
+### 6. Run the dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) and create an account to start.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Database Schema
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**profiles** — public user data, auto-created on signup via database trigger
 
-## Learn More
+**sessions** — study sessions with title, description, location, date, and a foreign key to the creator
 
-To learn more about Next.js, take a look at the following resources:
+**session_participants** — join table linking users to sessions (many-to-many), with a unique constraint preventing duplicate joins
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+All tables use Row Level Security. Users can only create sessions as themselves, join/leave as themselves, and delete sessions they created.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## What I Learned
 
-## Deploy on Vercel
+This was my first full-stack app with a real backend. Key concepts I picked up:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Relational databases** — foreign keys, join tables, many-to-many relationships
+- **Authentication** — signup/login flows, session tokens via cookies, middleware-based route protection
+- **Row Level Security** — database-level authorization that works regardless of how the API is called
+- **Real-time subscriptions** — WebSocket channels that push database changes to the client
+- **Server vs. client components** — the Next.js App Router pattern of doing auth on the server and interactivity on the client
+- **Three Supabase clients** — browser, server, and middleware each need their own client because they run in different environments with different cookie access
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Future Improvements
+
+- [ ] Course filtering (search/filter sessions by course name)
+- [ ] Participant limit per session
+- [ ] OAuth login (Google / GitHub)
+- [ ] Session comments for participants to coordinate
+- [ ] User profile pictures via Supabase Storage
+
+---
+
+Built by [Your Name](https://github.com/YOUR-USERNAME) · April 2026
