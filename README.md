@@ -101,7 +101,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 
 ### 4. Create the database tables
 
-Go to the **SQL Editor** in your Supabase dashboard and run the SQL from the project's database setup script. This creates the `profiles`, `sessions`, and `session_participants` tables with Row Level Security policies and a trigger that auto-creates profiles on signup.
+Go to the **SQL Editor** in your Supabase dashboard, paste the contents of [`schema.sql`](schema.sql), and click **Run**. This creates the `profiles`, `sessions`, and `session_participants` tables with Row Level Security policies and a trigger that auto-creates profiles on signup.
 
 ### 5. Configure auth redirects
 
