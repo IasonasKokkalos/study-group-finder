@@ -29,7 +29,22 @@ export default function CreateSessionForm ({
         setError(null);
 
         // Combine date and time into a single ISO string
-        const sessionDate = new Date(`${date}T${time}`).toISOString();
+          const sessionDate = new Date(`${date}T${time}`);
+          const now = new Date();
+          const oneMonthFromNow = new Date();
+          oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
+
+          if (sessionDate < now) {
+            setError("Session date can't be in the past.");
+            setLoading(false);
+            return;
+            }
+
+          if (sessionDate > oneMonthFromNow) {
+          setError("Sessions can't be more than 1 month from now.");
+          setLoading(false);
+          return;
+          }
 
         const { error: insertError } = await supabase.from("sessions").insert({
             title,
