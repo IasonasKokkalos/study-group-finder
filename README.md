@@ -1,8 +1,6 @@
-# 📚 Study Group Finder — TU/e
+#  Study Group Finder — TU/e
 
 A full-stack web app where TU/e students can create, browse, and join study sessions. Post a session, share the course and location, and other students can join in real time — no page refresh needed.
-
-Built as Project 2 of my personal [portfolio roadmap](https://github.com/YOUR-USERNAME).
 
 ![Next.js](https://img.shields.io/badge/Next.js_15-000?logo=nextdotjs&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
@@ -60,10 +58,10 @@ study-group-finder/
 │   │   └── supabase/
 │   │       ├── client.ts
 │   │       ├── server.ts
-│   │       └── middleware.ts
-│   └── types/
-│       └── index.ts
-├── middleware.ts
+│   │       └── proxy.ts
+│   ├── types/
+│   │   └── index.ts
+│   └──proxy.ts
 ├── .env.local
 └── package.json
 ```
@@ -141,11 +139,10 @@ This was my first full-stack app with a real backend. Key concepts I picked up:
 ## Future Improvements
 
 - [ ] Course filtering (search/filter sessions by course name)
+- [ ] Room dropdown ( Standarized room data) 
+- [ ] Room-based scheduling with conflict prevention (requires standardized room data)
 - [ ] Participant limit per session
 - [ ] OAuth login (Google / GitHub)
 - [ ] Session comments for participants to coordinate
 - [ ] User profile pictures via Supabase Storage
 
----
-
-Built by [Your Name](https://github.com/YOUR-USERNAME) · April 2026
