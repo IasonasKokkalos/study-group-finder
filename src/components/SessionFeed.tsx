@@ -22,9 +22,9 @@ export default function SessionFeed({ currentUserId }: SessionFeedProps) {
         .select(`
             *,
             creator:profiles!creator_id(*),
-            perticipants:session_participants(
+            participants:session_participants(
                 *,
-                profile:profile!user_id(*)
+                profile:profiles!user_id(*)
             )`
         )
         .gte("session_date", new Date().toISOString())
@@ -54,7 +54,7 @@ export default function SessionFeed({ currentUserId }: SessionFeedProps) {
           )
           .on(
             "postgres_changes",
-            { event: "*", schema: "public", table: "sessions_participants" },
+            { event: "*", schema: "public", table: "session_participants" },
             () => {
               fetchSessions(); // Refresh whenever someone joins/leaves
             }

@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { create } from "domain";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
