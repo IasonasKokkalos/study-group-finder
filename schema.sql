@@ -1,9 +1,6 @@
--- =============================================
 -- Study Group Finder — Database Schema
--- =============================================
 -- Run this in your Supabase SQL Editor to set up
 -- all tables, policies, triggers, and real-time.
--- =============================================
 
 -- Create the profiles table (public-facing user data)
 create table public.profiles (
