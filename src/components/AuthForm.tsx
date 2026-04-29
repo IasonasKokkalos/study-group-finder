@@ -25,6 +25,12 @@ export default function AuthForm({ mode }: AuthFormProps) {
         setError(null);
         setMessage(null);
 
+        if (mode === "signup" && !email.endsWith("@student.tue.nl")) {
+          setError("Please use your TU/e student email (@student.tue.nl)");
+          setLoading(false);
+          return;
+        }
+
         if ( mode == "signup" ) {
             const { data,error } = await supabase.auth.signUp({
                 email,
