@@ -9,6 +9,11 @@ A full-stack web app where TU/e students can create, browse, and join study sess
 ![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000?logo=vercel&logoColor=white)
 
 ---
+## Live Demo
+
+[study-group-finder-omega.vercel.app](https://study-group-finder-omega.vercel.app)
+
+> **Note:** The live demo may be temporarily unavailable as the database is on Supabase's free tier and pauses during periods of inactivity.
 
 ## What It Does
 
@@ -145,4 +150,5 @@ This was my first full-stack app with a real backend. Key concepts I picked up:
 - [ ] OAuth login (Google / GitHub)
 - [ ] Session comments for participants to coordinate
 - [ ] User profile pictures via Supabase Storage
+
 
